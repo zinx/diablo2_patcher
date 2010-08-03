@@ -43,13 +43,11 @@ typedef struct patch_ctx_s patch_ctx_t;
 struct patch_ctx_s {
 	void *data;
 	DWORD regs[R_COUNT];
-	void *node;
-	DWORD ret;
 };
 
 #define patch_ctx_reg(ctx,n) ((ctx)->regs[n])
-#define patch_ctx_arg(ctx,n) (((DWORD*)((ctx)+1))[n])
-#define patch_ctx_ret(ctx) ((ctx)->ret)
+#define patch_ctx_arg(ctx,n) (((DWORD*)ctx->regs[R_ESP])[(n)+2])
+#define patch_ctx_ret(ctx) ((void*)patch_ctx_arg(ctx, -1))
 
 typedef void (_cdecl *patch_func_t)(patch_ctx_t *ctx, void *data);
 

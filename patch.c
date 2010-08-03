@@ -21,7 +21,7 @@ void patch_rel(void *dest, const void *addr)
 
 /*** FUNCTION PATCHING ***/
 
-#define MAX_INSNS	28
+#define MAX_INSNS	16
 struct pentry {
 	patch_func_t entry, exit;
 	void *data; /* for your own use */
@@ -86,7 +86,7 @@ void *patch_function(HMODULE lib, DWORD offset, DWORD insns, patch_func_t entry,
 
 	const unsigned char call_insn = 0xE9; /* jmp */
 	patch_mem(LIBABS(lib, offset), &call_insn, 1);
-	patch_rel(LIBABS(lib, offset) + 1, &node->entry_code[0]);
+	patch_rel(LIBABS(lib, offset + 1), &node->entry_code[0]);
 
 	return node;
 }
