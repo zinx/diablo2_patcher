@@ -51,7 +51,7 @@ struct patch_ctx_s {
 
 typedef void (_cdecl *patch_func_t)(patch_ctx_t *ctx, void *data);
 
-void *patch_function(HMODULE lib, DWORD offset, DWORD insns, patch_func_t entry, patch_func_t exit, void *data);
+void *patch_function(void *addr, DWORD insns, patch_func_t entry, patch_func_t exit, void *data);
 void unpatch_function(void *func);
 
 #ifdef __cplusplus
